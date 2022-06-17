@@ -13,5 +13,14 @@ const getAllStations = async () => {
     return await tubes.distinct("stations.name");
 }
 
+const getJourneys = async (stations) => {
+    let start = stations.selectedStartStation;
+    let end = stations.selectedEndStation;
+    console.log(`Repository: getJourneys`);
+    return await tubes.find({$and: [{"stations.name": start}, {"stations.name" : end}]}).toArray();
+}
+
 module.exports.getTubes = getTubes;
 module.exports.getAllStations = getAllStations;
+module.exports.getJourneys = getJourneys;
+

@@ -10,5 +10,11 @@ const getAllStations = async () => {
     return await tubeRepository.getAllStations();
 }
 
+const getJourneys = async (stations) => {
+    console.log(`Service: getJourneys`);
+    return await tubeRepository.getJourneys(stations);
+}
+
 module.exports.getTubes = getTubes;
 module.exports.getAllStations = getAllStations;
+module.exports.getJourneys = getJourneys;

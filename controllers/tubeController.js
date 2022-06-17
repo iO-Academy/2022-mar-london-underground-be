@@ -10,5 +10,13 @@ const getAllStations = (req, res) => {
     tubeService.getAllStations().then((allStations) => res.json(allStations));
 }
 
+const getJourneys = (req, res) => {
+    console.log('Controller: getJourneys');
+    let stations = req.body;
+    console.log(stations);
+    tubeService.getJourneys(stations).then((journeys) => res.json(journeys));
+}
+
 module.exports.getTubes = getTubes;
 module.exports.getAllStations = getAllStations;
+module.exports.getJourneys = getJourneys;
