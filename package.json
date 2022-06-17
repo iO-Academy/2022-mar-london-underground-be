@@ -1,12 +1,13 @@
 {
   "dependencies": {
-    "express": "^4.18.1"
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongodb": "^4.7.0"
   },
   "name": "2022-mar-london-underground-be",
   "description": "A journey planning application.",
   "version": "1.0.0",
   "main": "app.js",
-  "devDependencies": {},
   "scripts": {
     "test": "jest"
   },
