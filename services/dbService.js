@@ -12,4 +12,5 @@ const connectToDb = async () => {
     console.log(`Database is ${dbName}`);
     return db;
 }
+
 module.exports.connectToDb = connectToDb;
