@@ -1,5 +1,9 @@
-[
-  {"name":"Bakerloo", "stops": [
+[{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69ed"
+  },
+  "line": "Bakerloo",
+  "stations": [
     {
       "code": "BST",
       "name": "Baker Street",
@@ -173,8 +177,13 @@
       "timeToPrev": 303,
       "zone": 3
     }
-  ]},
-  {"name":"Central", "stops": [
+  ]
+},{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69ee"
+  },
+  "line": "Central",
+  "stations": [
     {
       "code": "BNK",
       "name": "Bank",
@@ -516,8 +525,13 @@
       "timeToPrev": 272,
       "zone": 1
     }
-  ]},
-  {"name":"District", "stops": [
+  ]
+},{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69ef"
+  },
+  "line": "District",
+  "stations": [
     {
       "code": "ACT",
       "name": "Acton Town",
@@ -922,8 +936,13 @@
       "timeToPrev": 107,
       "zone": 4
     }
-  ]},
-  {"name":"Hammersmith_and_Circle", "stops":[
+  ]
+},{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69f0"
+  },
+  "line": "Hammersmith_and_Circle",
+  "stations": [
     {
       "code": "ALD",
       "name": "Aldgate",
@@ -1181,8 +1200,13 @@
       "timeToPrev": 222,
       "zone": 1
     }
-  ]},
-  {"name":"Jubilee", "stops": [
+  ]
+},{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69f1"
+  },
+  "line": "Jubilee",
+  "stations": [
     {
       "code": "BST",
       "name": "Baker Street",
@@ -1370,8 +1394,13 @@
       "timeToPrev": 250,
       "zone": 6
     }
-  ]},
-  {"name":"Metropolitan", "stops": [
+  ]
+},{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69f2"
+  },
+  "line": "Metropolitan",
+  "stations": [
     {
       "code": "ALD",
       "name": "Aldgate",
@@ -1601,8 +1630,13 @@
       "timeToPrev": 313,
       "zone": 5
     }
-  ]},
-  {"name":"Northern", "stops": [
+  ]
+},{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69f3"
+  },
+  "line": "Northern",
+  "stations": [
     {
       "code": "ANG",
       "name": "Angel",
@@ -1951,8 +1985,13 @@
       "timeToPrev": 220,
       "zone": 3
     }
-  ]},
-  {"name":"Piccadilly", "stops": [
+  ]
+},{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69f4"
+  },
+  "line": "Piccadilly",
+  "stations": [
     {
       "code": "ACT",
       "name": "Acton Town",
@@ -2322,8 +2361,13 @@
       "timeToPrev": 147,
       "zone": 3
     }
-  ]},
-  {"name":"Victoria", "stops": [
+  ]
+},{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69f5"
+  },
+  "line": "Victoria",
+  "stations": [
     {
       "code": "BHR",
       "name": "Blackhorse Road",
@@ -2434,8 +2478,13 @@
       "timeToPrev": 80,
       "zone": 1
     }
-  ]},
-  {"name":"Waterloo_and_City", "stops": [
+  ]
+},{
+  "_id": {
+    "$oid": "62ac3845d68145b2749e69f6"
+  },
+  "line": "Waterloo_and_City",
+  "stations": [
     {
       "code": "BNK",
       "name": "Bank",
@@ -2448,5 +2497,5 @@
       "timeToPrev": 160,
       "zone": 4
     }
-  ]}
-]
+  ]
+}]
