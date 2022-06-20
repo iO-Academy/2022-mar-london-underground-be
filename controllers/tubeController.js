@@ -14,16 +14,7 @@ const getJourneys = (req, res) => {
     console.log('Controller: getJourneys');
     let stations = req.body;
     console.log(stations);
-    tubeService.getJourneys(stations)
-        .then((journeys) => {
-                let lines = [];
-                journeys.forEach(item => {
-                    lines.push(item.line);
-                })
-                return lines;
-            }
-        )
-        .then((lines) => res.json(lines));
+    tubeService.getJourneys(stations).then((journeys) => res.json(journeys));
 }
 
 module.exports.getTubes = getTubes;

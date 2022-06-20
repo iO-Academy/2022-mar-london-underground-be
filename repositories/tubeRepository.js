@@ -18,6 +18,7 @@ const getJourneys = async (stations) => {
     let end = stations.selectedEndStation;
     console.log(`Repository: getJourneys`);
     return await tubes.find({$and: [{"stations.name": start}, {"stations.name" : end}]}).toArray();
+
 }
 
 module.exports.getTubes = getTubes;
