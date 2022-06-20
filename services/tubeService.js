@@ -13,11 +13,16 @@ const getAllStations = async () => {
 const getJourneys = async (start, end) => {
     console.log(`Service: getJourneys`);
 
-   return await tubeRepository.getJourneys(start, end)
-    .then((journeys) => {
+    return await tubeRepository.getJourneys(start, end)
+        .then((journeys) => {
             let lines = [];
             journeys.forEach(line => {
-                let filteredStations = line.stations.filter(filtered => filtered.name <= start && filtered.name >= end);
+                let filteredStations = [];
+                if (start > end) {
+                    filteredStations = line.stations.filter(filtered => filtered.name <= start && filtered.name >= end);
+                } else {
+                    filteredStations = line.stations.filter(filtered => filtered.name >= start && filtered.name <= end);
+                }
                 let stops = filteredStations.length -1;
                 console.log('number of stops = ' + stops);
                 let lineData = {"line": line.line, "stops": stops}
