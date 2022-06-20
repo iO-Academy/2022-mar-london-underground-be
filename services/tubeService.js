@@ -18,15 +18,19 @@ const getJourneys = async (start, end) => {
             let lines = [];
             journeys.forEach(line => {
                 let filteredStations = [];
+                let journeyTime = 0;
                 if (start > end) {
                     filteredStations = line.stations.filter(filtered => filtered.name <= start && filtered.name >= end);
                 } else {
                     filteredStations = line.stations.filter(filtered => filtered.name >= start && filtered.name <= end);
                 }
+                journeyTime = filteredStations.reduce((sum, current) => sum + current.timeToPrev, 1);
+                console.log(journeyTime);
                 let stops = filteredStations.length -1;
                 console.log('number of stops = ' + stops);
-                let lineData = {"line": line.line, "stops": stops}
+                let lineData = {"line": line.line, "stops": stops, "time": journeyTime}
                 lines.push(lineData);
+
             })
             return lines;
         })
