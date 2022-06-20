@@ -941,7 +941,7 @@
   "_id": {
     "$oid": "62ac3845d68145b2749e69f0"
   },
-  "line": "Hammersmith_and_Circle",
+  "line": "Hammersmith and Circle",
   "stations": [
     {
       "code": "ALD",
@@ -2483,7 +2483,7 @@
   "_id": {
     "$oid": "62ac3845d68145b2749e69f6"
   },
-  "line": "Waterloo_and_City",
+  "line": "Waterloo and City",
   "stations": [
     {
       "code": "BNK",
