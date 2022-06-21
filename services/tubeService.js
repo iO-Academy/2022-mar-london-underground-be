@@ -23,7 +23,7 @@ const getJourneys = async (start, end) => {
                 if (start > end) {
                     filteredStations = line.stations.filter(filtered => filtered.name <= start && filtered.name >= end);
                     filteredStations.reverse();
-                    filteredStations[filteredStations.length - 1].timeToPrev = '';  //6478/4853 before reduce
+                    filteredStations[filteredStations.length - 1].timeToPrev = 0;
                     journeyTime = filteredStations.reduce((sum, current) => sum + current.timeToPrev, 0);
                     stops = filteredStations.reduce((stations, station) => {
                         let stopData = {"stop": station.name, "timeToNext": station.timeToPrev}
@@ -33,7 +33,7 @@ const getJourneys = async (start, end) => {
 
                 } else {
                     filteredStations = line.stations.filter(filtered => filtered.name >= start && filtered.name <= end);
-                    filteredStations[filteredStations.length - 1].timeToNext = ''; //6673/4997 before reduce
+                    filteredStations[filteredStations.length - 1].timeToNext = 0;
                     journeyTime = filteredStations.reduce((sum, current) => sum + current.timeToNext, 0);
                     stops = filteredStations.reduce((stations, station) => {
                         let stopData = {"stop": station.name, "timeToNext": station.timeToNext}
@@ -42,12 +42,8 @@ const getJourneys = async (start, end) => {
                     }, []);
                 }
 
-                console.log(stops);
-                console.log(journeyTime);
                 let numStops = filteredStations.length -1;
 
-                // console.log(stops);
-                console.log('number of stops = ' + numStops);
                 let lineData = {"line": line.line, "stops": numStops, "time": journeyTime, "stations": stops};
                 lines.push(lineData);
             })
