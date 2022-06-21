@@ -10,13 +10,21 @@ const getTubes = async () => {
 
 const getAllStations = async () => {
     console.log(`Repository: getAllStations`);
-    return await tubes.distinct("stations.name");
+    return await tubes.aggregate([
+        { "$group": {
+                "_id": null,
+                "name": { "$first": "$stations.name",  },
+                "code": { "$first": "$stations.code" }
+            }}
+    ]).toArray();
 }
 
 const getJourneys = async (start, end) => {
     console.log(`Repository: getJourneys`);
-    return await tubes.find({$and: [{"stations.name": start}, {"stations.name" : end}]}).toArray();
-
+    return await tubes.find(
+                {"stations.name":
+                        {$in: [start, end]}
+        }).toArray();
 }
 
 module.exports.getTubes = getTubes;
