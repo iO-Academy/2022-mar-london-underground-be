@@ -10,7 +10,13 @@ const getTubes = async () => {
 
 const getAllStations = async () => {
     console.log(`Repository: getAllStations`);
-    return await tubes.distinct("stations.name");
+    return await tubes.aggregate([
+        { "$group": {
+                "_id": null,
+                "name": { "$first": "$stations.name",  },
+                "code": { "$first": "$stations.code" }
+            }}
+    ]).toArray();
 }
 
 const getJourneys = async (start, end) => {
