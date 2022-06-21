@@ -7,7 +7,19 @@ const getTubes = async () => {
 
 const getAllStations = async () => {
     console.log(`Service: getAllStations`);
-    return await tubeRepository.getAllStations();
+    return await tubeRepository.getAllStations()
+        .then((allStations) => {
+            let stationList = allStations[0].name;
+            let codeList = allStations[0].code;
+            let finalList = [];
+
+            stationList.forEach((station) => {
+                station += ` (${codeList[stationList.indexOf(station)]})`
+                finalList.push(station);
+            })
+
+            return finalList;
+        });
 }
 
 const getJourneys = async (start, end) => {
