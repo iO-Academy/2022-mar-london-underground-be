@@ -43,9 +43,7 @@ const getJourneys = async (start, end) => {
                 }
 
                 let numStops = filteredStations.length -1;
-
                 let lineData = {"line": line.line, "stops": numStops, "time": journeyTime, "stations": stops};
-
                 lines.push(lineData);
             })
             return lines;
