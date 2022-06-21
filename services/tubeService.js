@@ -47,7 +47,7 @@ const getJourneys = async (start, end) => {
 
                 // console.log(stops);
                 console.log('number of stops = ' + numStops);
-                let lineData = {"line": line.line, "stops": numStops, "time": journeyTime,}
+                let lineData = {"line": line.line, "stops": numStops, "time": journeyTime, "stations": stops};
                 lines.push(lineData);
             })
             return lines;
