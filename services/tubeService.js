@@ -17,7 +17,6 @@ const getJourneys = async (start, end) => {
         .then((journeys) => {
             let startArray = [];
             let endArray = [];
-            let mergeArray = [];
             journeys.forEach((journey => {
                 if (journey.stations.some(i => i.name === start)) {
                     startArray.push(journey)
@@ -31,16 +30,18 @@ const getJourneys = async (start, end) => {
             }));
             // console.log(startArray);
             // console.log(endArray);
-            endArray.forEach((endLine) => {
-                startArray.forEach((startLine) => {
-                    if (startLine.stations.some(i => i.name === endline.stations.includes(i))) {
-                        mergeArray.push(station)
-                    }
+            startArray.forEach(item =>
+            {
+                let name = item.line;
+                let lineArray = item.stations.map(station => station.name);
+                lineArray.forEach(stop => {
+                    if(endArray[0].stations.find(i => i.name === stop))
+                        console.log(stop + ' ' + name + ' ' + endArray[0].line);
                 })
-                console.log(mergeArray);
+                console.log(lineArray);
+            })
             });
 
-        })
     // let lines = [];
     // journeys.forEach(line => {
     //     let filteredStations = [];
