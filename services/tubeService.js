@@ -35,6 +35,7 @@ const getJourneys = async (start, end) => {
                 } else {
                     filteredStations = line.stations.filter(filtered => filtered.name >= start && filtered.name <= end);
                 }
+                
                 let stops = filteredStations.length -1;
                 console.log('number of stops = ' + stops);
                 let lineData = {"line": line.line, "stops": stops}
