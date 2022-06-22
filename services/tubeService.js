@@ -9,40 +9,62 @@ const getAllStations = async () => {
     console.log(`Service: getAllStations`);
     return await tubeRepository.getAllStations()
         .then((stations) => {
-            let stationArrays = stations[0].name;
-            let codeArrays = stations[0].code;
-            let stationList = [];
-            let sortedStationList = [];
-            let codeList = [];
-            let sortedCodeList = [];
+            let unifiedStationList = [];
+            let unifiedCodeList = [];
             let finalList = [];
+                stations[0].name.forEach((line) => {
+                    line.forEach((station) => {
+                    unifiedStationList.push(station);
+                })})
+                console.log(unifiedStationList)
 
-            stationArrays.forEach((line) => {
-                line.forEach((station) => {
-                    if (!stationList.includes(station)) {
-                        stationList.push(station);
-                    }
-                })
-            })
-            sortedStationList = stationList.sort();
+                stations[0].code.forEach((line) => {
+                    line.forEach((station) => {
+                        unifiedCodeList.push(station);
+                    })})
+                console.log(unifiedCodeList)
 
-            codeArrays.forEach((line) => {
-                line.forEach((station) => {
-                    if (!codeList.includes(station)) {
-                        codeList.push(station);
-                    }
-                })
-            })
-            sortedCodeList = codeList.sort();
-
-            sortedStationList.forEach((station) => {
-                station += ` (${sortedCodeList[sortedStationList.indexOf(station)]})`
+            unifiedStationList.forEach((station) => {
+                station += ` (${unifiedCodeList[unifiedStationList.indexOf(station)]})`
                 finalList.push(station);
             })
 
-            return finalList;
-        });
-}
+        }
+
+        )
+
+        }
+//             let stationArrays = stations[0].name;
+//             let codeArrays = stations[0].code;
+//             let stationList = [];
+//             let codeList = [];
+//             let finalList = [];
+//
+//             stationArrays.forEach((line) => {
+//                 line.forEach((station) => {
+//                     if (!stationList.includes(station)) {
+//                         stationList.push(station);
+//                     }
+//                 })
+//             })
+//
+//             codeArrays.forEach((line) => {
+//                 line.forEach((station) => {
+//                     if (!codeList.includes(station)) {
+//                         codeList.push(station);
+//                     }
+//                 })
+//             })
+//
+//             stationList.forEach((station) => {
+//                 station += ` (${codeList[stationList.indexOf(station)]})`
+//                 finalList.push(station);
+//             })
+//
+//
+//             return finalList;
+//         });
+// }
 
 const getJourneys = async (start, end) => {
     console.log(`Service: getJourneys`);
