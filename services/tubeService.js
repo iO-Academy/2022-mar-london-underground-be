@@ -8,13 +8,35 @@ const getTubes = async () => {
 const getAllStations = async () => {
     console.log(`Service: getAllStations`);
     return await tubeRepository.getAllStations()
-        .then((allStations) => {
-            let stationList = allStations[0].name;
-            let codeList = allStations[0].code;
+        .then((stations) => {
+            let stationArrays = stations[0].name;
+            let codeArrays = stations[0].code;
+            let stationList = [];
+            let sortedStationList = [];
+            let codeList = [];
+            let sortedCodeList = [];
             let finalList = [];
 
-            stationList.forEach((station) => {
-                station += ` (${codeList[stationList.indexOf(station)]})`
+            stationArrays.forEach((line) => {
+                line.forEach((station) => {
+                    if (!stationList.includes(station)) {
+                        stationList.push(station);
+                    }
+                })
+            })
+            sortedStationList = stationList.sort();
+
+            codeArrays.forEach((line) => {
+                line.forEach((station) => {
+                    if (!codeList.includes(station)) {
+                        codeList.push(station);
+                    }
+                })
+            })
+            sortedCodeList = codeList.sort();
+
+            sortedStationList.forEach((station) => {
+                station += ` (${sortedCodeList[sortedStationList.indexOf(station)]})`
                 finalList.push(station);
             })
 
