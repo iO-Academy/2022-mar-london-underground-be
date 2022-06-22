@@ -28,10 +28,24 @@ const getJourneys = async (start, end) => {
     return await tubeRepository.getJourneys(start, end)
         .then((journeys) => {
             let lines = [];
-            let stop;
+            let stops;
             journeys.forEach(line => {
                 let filteredStations = [];
                 let journeyTime = 0;
+                let price = 399;
+                let diff = 0;
+
+                let startZone = line.stations.filter(x => x.name === start)
+                let endZone = line.stations.filter(y => y.name === end)
+
+                if(startZone[0].zone > endZone[0].zone) {
+                    diff = startZone[0].zone - endZone[0].zone;
+                    price += 70 * diff;
+                } else if (startZone[0].zone < endZone[0].zone) {
+                    diff = endZone[0].zone - startZone[0].zone;
+                    price += 35 * diff;
+                }
+
                 if (start > end) {
                     filteredStations = line.stations.filter(filtered => filtered.name <= start && filtered.name >= end);
                     filteredStations.reverse();
@@ -55,7 +69,7 @@ const getJourneys = async (start, end) => {
                 }
 
                 let numStops = filteredStations.length - 1;
-                let lineData = {"line": line.line, "stops": numStops, "time": journeyTime, "stations": stops};
+                let lineData = {"line": line.line, "stops": numStops, "time": journeyTime, "price": price, "stations": stops};
 
                 lines.push(lineData);
             })
