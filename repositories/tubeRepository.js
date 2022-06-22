@@ -13,8 +13,8 @@ const getAllStations = async () => {
     return await tubes.aggregate([
         { "$group": {
                 "_id": null,
-                "name": { "$first": "$stations.name",  },
-                "code": { "$first": "$stations.code" }
+                "name": { "$addToSet": "$stations.name",  },
+                "code": { "$addToSet": "$stations.code" }
             }}
     ]).toArray();
 }
