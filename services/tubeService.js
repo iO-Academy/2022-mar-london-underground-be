@@ -9,28 +9,40 @@ const getAllStations = async () => {
     console.log(`Service: getAllStations`);
     return await tubeRepository.getAllStations()
         .then((stations) => {
-            // console.log(stations[0].name);
             let stationArrays = stations[0].name;
+            let codeArrays = stations[0].code;
             let stationList = [];
-            let stationArray = [];
+            let sortedStationList = [];
+            let codeList = [];
+            let sortedCodeList = [];
+            let finalList = [];
 
-             stationArrays.forEach((line => {
-                 let tempArray = [];
-                line.forEach((station => {
-                    if(!tempArray.includes(station)) {
-                        tempArray.push(station);
-                    }
-                }))
-                 tempArray.forEach((station) => {
-                    if(!stationList.includes(station)) {
+            stationArrays.forEach((line) => {
+                line.forEach((station) => {
+                    if (!stationList.includes(station)) {
                         stationList.push(station);
-                        }})
-                 // console.log(line);
-            }))
-            stationArray = stationList.sort();
-            // console.log(stationlist.sort());
-        });
+                    }
+                })
+            })
+            sortedStationList = stationList.sort();
 
+            codeArrays.forEach((line) => {
+                line.forEach((station) => {
+                    if (!codeList.includes(station)) {
+                        codeList.push(station);
+                    }
+                })
+            })
+            sortedCodeList = codeList.sort();
+
+            sortedStationList.forEach((station) => {
+                station += ` (${sortedCodeList[sortedStationList.indexOf(station)]})`
+                finalList.push(station);
+            })
+
+            return finalList;
+
+        });
 
 }
 
@@ -41,6 +53,10 @@ const getJourneys = async (start, end) => {
         .then((journeys) => {
             let startArray = [];
             let endArray = [];
+            let singleJourneyArray = [];
+            let changeData = [];
+            let filteredData = [];
+
             journeys.forEach((journey => {
                 if (journey.stations.some(i => i.name === start)) {
                     startArray.push(journey)
@@ -49,22 +65,36 @@ const getJourneys = async (start, end) => {
                     endArray.push(journey)
                 }
                 if (journey.stations.some(i => i.name === start) && journey.stations.some(i => i.name === end)) {
-                    console.log(journey.line)
+                    singleJourneyArray.push(journey);
+                    // console.log(journey.line)
                 }
             }));
-            // console.log(startArray);
             // console.log(endArray);
-            startArray.forEach(item =>
-            {
-                let name = item.line;
+
+            startArray.forEach(item => {
+                if (!singleJourneyArray.includes(item)) {
                 let lineArray = item.stations.map(station => station.name);
+                let name = item.line;
                 lineArray.forEach(stop => {
-                    if(endArray[0].stations.find(i => i.name === stop))
-                        console.log(stop + ' ' + name + ' ' + endArray[0].line);
-                })
-                console.log(lineArray);
+                    for (let x = 0; x < endArray.length; x++ ) {
+                        let tempArray = [];
+                    if (endArray[x].stations.some(i => i.name === stop)) {
+                        tempArray.push([name, endArray[x].line, stop]);
+                    }
+                    if (tempArray.length !== 0) {
+                        changeData.push(tempArray);
+                    }
+                }})}
+                // console.log(lineArray);
             })
-            });
+            filteredData = changeData.filter((change => {
+                if (!filteredData.includes(change[0]) )
+                    return change;
+
+            }))
+            return changeData;
+        });
+
 
     // let lines = [];
     // journeys.forEach(line => {
