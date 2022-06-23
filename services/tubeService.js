@@ -15,7 +15,7 @@ const getAllStations = async () => {
 
             stationArray.forEach((station) => {
                 station += ` (${codeArray[stationArray.indexOf(station)]})`
-                if(!joinedList.includes(station)) {
+                if (!joinedList.includes(station)) {
                     joinedList.push(station);
                 }
             })
@@ -40,7 +40,7 @@ const getJourneys = async (start, end) => {
                 let startZone = line.stations.filter(x => x.name === start)
                 let endZone = line.stations.filter(y => y.name === end)
 
-                if(startZone[0].zone > endZone[0].zone) {
+                if (startZone[0].zone > endZone[0].zone) {
                     diff = startZone[0].zone - endZone[0].zone;
                     price += 70 * diff;
                 } else if (startZone[0].zone < endZone[0].zone) {
