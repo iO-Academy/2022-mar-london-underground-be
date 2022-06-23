@@ -1,48 +1,28 @@
 const tubeRepository = require('../repositories/tubeRepository');
 
-const getTubes = async () => {
-    console.log(`Service: getTubes`);
-    return await tubeRepository.getTubes();
-}
-
 const getAllStations = async () => {
     console.log(`Service: getAllStations`);
     return await tubeRepository.getAllStations()
         .then((stations) => {
-            let stationArrays = stations[0].name;
-            let codeArrays = stations[0].code;
-            let stationList = [];
-            let sortedStationList = [];
-            let codeList = [];
-            let sortedCodeList = [];
-            let finalList = [];
+            let stationArray = [];
+            let codeArray = [];
+            let joinedList = [];
 
-            stationArrays.forEach((line) => {
-                line.forEach((station) => {
-                    if (!stationList.includes(station)) {
-                        stationList.push(station);
-                    }
+            stations.forEach((station) => {
+                    station._id.name.map(item => stationArray.push(item))
+                    station._id.code.map(item => codeArray.push(item))
                 })
-            })
-            sortedStationList = stationList.sort();
 
-            codeArrays.forEach((line) => {
-                line.forEach((station) => {
-                    if (!codeList.includes(station)) {
-                        codeList.push(station);
-                    }
-                })
-            })
-            sortedCodeList = codeList.sort();
-
-            sortedStationList.forEach((station) => {
-                station += ` (${sortedCodeList[sortedStationList.indexOf(station)]})`
-                finalList.push(station);
+            stationArray.forEach((station) => {
+                station += ` (${codeArray[stationArray.indexOf(station)]})`
+                if (!joinedList.includes(station)) {
+                    joinedList.push(station);
+                }
             })
 
-            return finalList;
-        });
-}
+            return joinedList.sort();
+        })
+    }
 
 const getJourneys = async (start, end) => {
     console.log(`Service: getJourneys`);
@@ -60,7 +40,7 @@ const getJourneys = async (start, end) => {
                 let startZone = line.stations.filter(x => x.name === start)
                 let endZone = line.stations.filter(y => y.name === end)
 
-                if(startZone[0].zone > endZone[0].zone) {
+                if (startZone[0].zone > endZone[0].zone) {
                     diff = startZone[0].zone - endZone[0].zone;
                     price += 70 * diff;
                 } else if (startZone[0].zone < endZone[0].zone) {
@@ -78,7 +58,6 @@ const getJourneys = async (start, end) => {
                         stations.push(stopData);
                         return stations;
                     }, []);
-
                 } else {
                     filteredStations = line.stations.filter(filtered => filtered.name >= start && filtered.name <= end);
                     filteredStations[filteredStations.length - 1].timeToNext = 0;
@@ -91,14 +70,16 @@ const getJourneys = async (start, end) => {
                 }
 
                 let numStops = filteredStations.length - 1;
-                let lineData = {"line": line.line, "stops": numStops, "time": journeyTime, "price": price, "stations": stops};
-
+                let lineData = {"line": line.line,
+                                 "stops": numStops,
+                                 "time": journeyTime,
+                                 "price": price,
+                                 "stations": stops};
                 lines.push(lineData);
             })
             return lines;
         })
 }
 
-module.exports.getTubes = getTubes;
 module.exports.getAllStations = getAllStations;
 module.exports.getJourneys = getJourneys;
