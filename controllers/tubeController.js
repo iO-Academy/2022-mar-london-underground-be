@@ -12,5 +12,13 @@ const getJourneys = (req, res) => {
     tubeService.getJourneys(start, end).then((journeys) => res.json(journeys));
 }
 
+const badRequest = (req, res) => {
+    return res.status(500).json({
+        code : 500,
+        Message: "Unknown route",
+    })
+}
+
+module.exports.badRequest = badRequest;
 module.exports.getAllStations = getAllStations;
 module.exports.getJourneys = getJourneys;
