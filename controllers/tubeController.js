@@ -15,7 +15,7 @@ const getJourneys = (req, res) => {
 const badRequest = (req, res) => {
     return res.status(500).json({
         code : 500,
-        Message: "Unknown route",
+        message: "Unknown route"
     })
 }
 
