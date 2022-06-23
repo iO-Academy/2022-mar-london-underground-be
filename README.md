@@ -1,24 +1,100 @@
-# London Underground
-A journey planning application.
+## London Underground
+An API for a London underground app
 
-## Instuctions
+## Description
+London-Underground API is built using Node.JS, Express and Mongodb.
 
-Clone the repo
+## Getting Started
+1. Clone this repo:
+```
+git clone git@github.com:iO-Academy/2022-mar-london-underground-be.git
+```
+### Create the Database
+2. Open the Mongodb app.
+3. Create a database in mongodb called tubulardb and a collection called lines.
+4. Use the tubular.json file to populate the database.
 
-Create a database in mongodb called tubulardb
-
-Create a collection called lines
-
-Import the tubular.json in to lines
-
+### Set Up the Backend
+5. Open a terminal emulator (such as Terminal) and navigate to the directory, e.g.:
+```bash
+cd 2022-mar-london-underground-be
 npm install
+```
 
+## Run the API
+1. In the terminal emulator, navigate into the backend directory.
+```bash
 node app.js
+```
+2. The London-Underground API will be available at http://localhost:3001
 
-## Testing
+## Terminating the Application
+## Terminate the Backend and Frontend
+Both apps can be stopped from the terminal emulator by pressing Control-C in their tabs.
 
-In postman:
+## API Documentation
+This API supports GET and POST
 
-localhost:3001/stations - GET
+## Get all stations
 
-localhost:3001/journeys - POST, json body - {"selectedStartStation":"Embankment","selectedEndStation":"Westminster"}
+* **URL**
+
+ `/stations`
+
+* **Method**
+
+ `GET`
+ 
+ * **Code:** 200 <br />
+      **Content:** <br />
+    ```json
+   [
+    "Baker Street (BST)",
+    "Charing Cross (CHX)"
+   ]
+    ```
+    
+ ## Get Journey
+
+* **URL**
+
+ `/journeys`
+
+* **Method**
+
+ `POST`
+ 
+ * **Data Params**
+
+  * **Body:** `{"selectedStartStation":"string","selectedEndStation":"string"}`
+ 
+ * **Code:** 200 <br />
+     * **Content:** <br />
+    ```json
+       [
+    {
+        "line": "District",
+        "stops": 35,
+        "time": 6408,
+        "price": 399,
+        "stations": [
+            {
+                "stop": "Embankment",
+                "timeToNext": 274
+            },
+            {
+                "stop": "Fulham Broadway",
+                "timeToNext": 42
+            },
+          ]
+        }
+      ]
+    ```
+    
+## Authors
+
+[Alec Hamilton](https://github.com/alec-hamilton)
+
+[Andrew Scott](https://github.com/AndrewScott85)
+
+[Gediminas Melinauskas](https://github.com/Gantthebant)
