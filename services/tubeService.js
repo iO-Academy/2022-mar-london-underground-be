@@ -56,6 +56,7 @@ const getJourneys = async (start, end) => {
             let singleJourneyArray = [];
             let changeData = [];
             let filteredData = [];
+            let finalData = [];
 
             journeys.forEach((journey => {
                 if (journey.stations.some(i => i.name === start)) {
@@ -71,11 +72,11 @@ const getJourneys = async (start, end) => {
             }));
             // console.log(endArray);
 
-            startArray.forEach(item => {
+            startArray.forEach((item => {
                 if (!singleJourneyArray.includes(item)) {
                 let lineArray = item.stations.map(station => station.name);
                 let name = item.line;
-                lineArray.forEach(stop => {
+                lineArray.forEach((stop => {
                     for (let x = 0; x < endArray.length; x++ ) {
                         let tempArray = [];
                     if (endArray[x].stations.some(i => i.name === stop)) {
@@ -84,15 +85,52 @@ const getJourneys = async (start, end) => {
                     if (tempArray.length !== 0) {
                         changeData.push(tempArray);
                     }
-                }})}
-                // console.log(lineArray);
-            })
-            filteredData = changeData.filter((change => {
-                if (!filteredData.includes(change[0]) )
-                    return change;
+                    }
+
+                }))}
 
             }))
-            return changeData;
+            changeData.forEach((journey) => {
+                if ((!filteredData.some(change => change[0][0] === journey[0][0] && change[0][1] === journey[0][1]))) {
+                    filteredData.push(journey);
+                }
+                })
+            filteredData.forEach((containerArray) => {
+                finalData.push(containerArray[0]);
+            })
+
+            let changeArrayStart = [];
+            let changeArrayEnd = [];
+            finalData.forEach((option) => {
+                let keyStart = journeys.findIndex(object => {return object.line === option[0];})
+                let keyEnd = journeys.findIndex(object => {return object.line === option[1];})
+                let startLine = journeys[keyStart];
+                let endLine = journeys[keyEnd];
+                let startLineName = startLine.line;
+                let endLineName = endLine.line;
+                let startList = startLine.stations;
+                let endList = endLine.stations;
+                let cutPointStart = startList.findIndex(obj => {
+                   return obj.name === option[2]
+               });
+                let cutPointEnd = endList.findIndex(obj => {
+                    return obj.name === option[2]
+                });
+                if (cutPointStart > 0) {
+                    let cutSegmentStart = startList.slice(0, (cutPointStart + 1));
+                    changeArrayStart.push(`TAKE THE ${startLineName} LINE`)
+                    changeArrayStart.push(cutSegmentStart);
+                    changeArrayStart.push(`CHANGE TO ${endLineName} LINE`)
+
+                    let cutSegmentEnd = endList.slice(cutPointEnd + 1, end);
+                    changeArrayEnd.push(`TAKE THE ${endLineName} LINE`)
+                    changeArrayEnd.push(cutSegmentEnd);
+                    changeArrayEnd.push(`GET OFF THE TRAIN!!!`)
+                }
+            })
+            console.log(changeArrayStart);
+            console.log(changeArrayEnd);
+            return finalData;
         });
 
 
