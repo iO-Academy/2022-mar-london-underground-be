@@ -32,66 +32,82 @@ node app.js
 ## Terminate the Backend and Frontend
 Both apps can be stopped from the terminal emulator by pressing Control-C in their tabs.
 
-## API Documentation
+# API Documentation
 This API supports GET and POST
 
-## Get all stations
+## Get All Stations
 
 * **URL**
 
- `/stations`
+  `/stations`
 
 * **Method**
 
- `GET`
- 
- * **Code:** 200 <br />
-      **Content:** <br />
-    ```json
-   [
-    "Baker Street (BST)",
-    "Charing Cross (CHX)"
-   ]
-    ```
+  `GET`
+
+* **Response**
+  * **Code:** 200
+  * **Content:**
+  ```json
+    [
+      "Baker Street (BST)",
+      "Charing Cross (CHX)"
+    ]
+  ```
     
  ## Get Journey
 
 * **URL**
 
- `/journeys`
+  `/journeys`
 
 * **Method**
 
- `POST`
+  `POST`
  
- * **Data Params**
+* **Data Params**
 
   * **Body:** `{"selectedStartStation":"string","selectedEndStation":"string"}`
- 
- * **Code:** 200 <br />
-     * **Content:** <br />
-    ```json
-       [
+
+* **Response**
+
+  * **Code:** 200 <br />
+  * **Content:** <br />
+  ```json
+  [
     {
-        "line": "District",
-        "stops": 35,
-        "time": 6408,
-        "price": 399,
-        "stations": [
-            {
-                "stop": "Embankment",
-                "timeToNext": 274
-            },
-            {
-                "stop": "Fulham Broadway",
-                "timeToNext": 42
-            },
-          ]
-        }
+      "line": "District",
+      "stops": 35,
+      "time": 6408,
+      "price": 399,
+      "stations": [
+        {
+          "stop": "Embankment",
+          "timeToNext": 274
+        },
+        {
+          "stop": "Fulham Broadway",
+          "timeToNext": 42
+        },
       ]
-    ```
+    }
+  ]
+  ```
+  
+## Any Other URL
+
+* **Response**
+
+  * **Code:** 500
+  * **Content:**
+  ```json
+  {
+      "code": 500,
+      "message": "Unknown route"
+  }
+  ```
     
-## Authors
+# Authors
 
 [Alec Hamilton](https://github.com/alec-hamilton)
 
