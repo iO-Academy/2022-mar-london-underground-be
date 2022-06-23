@@ -3,19 +3,10 @@ const dbService = require('../services/dbService');
 let tubes = null;
 dbService.connectToDb().then((db) => tubes = db.collection('lines'));
 
-const getTubes = async () => {
-    console.log(`Repository: getTubes`);
-    return await tubes.find({}).toArray();
-}
-
 const getAllStations = async () => {
     console.log(`Repository: getAllStations`);
     return await tubes.aggregate([
-        { "$group": {
-                "_id": null,
-                "name": { "$addToSet": "$stations.name",  },
-                "code": { "$addToSet": "$stations.code" }
-            }}
+        {$group: {"_id": {name: "$stations.name", code : "$stations.code"}}}
     ]).toArray();
 }
 
@@ -25,7 +16,6 @@ const getJourneys = async (start, end) => {
 
 }
 
-module.exports.getTubes = getTubes;
 module.exports.getAllStations = getAllStations;
 module.exports.getJourneys = getJourneys;
 
