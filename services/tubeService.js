@@ -9,62 +9,28 @@ const getAllStations = async () => {
     console.log(`Service: getAllStations`);
     return await tubeRepository.getAllStations()
         .then((stations) => {
-            let unifiedStationList = [];
-            let unifiedCodeList = [];
-            let finalList = [];
-                stations[0].name.forEach((line) => {
-                    line.forEach((station) => {
-                    unifiedStationList.push(station);
-                })})
-                console.log(unifiedStationList)
+            let stationArray = [];
+            let codeArray = [];
+            let joinedList = [];
 
-                stations[0].code.forEach((line) => {
-                    line.forEach((station) => {
-                        unifiedCodeList.push(station);
-                    })})
-                console.log(unifiedCodeList)
+            stations.forEach((station) => {
+                    station._id.name.map(item => stationArray.push(item))
+                    station._id.code.map(item => codeArray.push(item))
 
-            unifiedStationList.forEach((station) => {
-                station += ` (${unifiedCodeList[unifiedStationList.indexOf(station)]})`
-                finalList.push(station);
+                })
+
+            stationArray.forEach((station) => {
+                station += ` (${codeArray[stationArray.indexOf(station)]})`
+                if(!joinedList.includes(station)) {
+                    joinedList.push(station);
+                }
             })
 
-        }
+            return joinedList.sort();
 
-        )
+        })
 
         }
-//             let stationArrays = stations[0].name;
-//             let codeArrays = stations[0].code;
-//             let stationList = [];
-//             let codeList = [];
-//             let finalList = [];
-//
-//             stationArrays.forEach((line) => {
-//                 line.forEach((station) => {
-//                     if (!stationList.includes(station)) {
-//                         stationList.push(station);
-//                     }
-//                 })
-//             })
-//
-//             codeArrays.forEach((line) => {
-//                 line.forEach((station) => {
-//                     if (!codeList.includes(station)) {
-//                         codeList.push(station);
-//                     }
-//                 })
-//             })
-//
-//             stationList.forEach((station) => {
-//                 station += ` (${codeList[stationList.indexOf(station)]})`
-//                 finalList.push(station);
-//             })
-//
-//
-//             return finalList;
-//         });
-// }
 
 const getJourneys = async (start, end) => {
     console.log(`Service: getJourneys`);

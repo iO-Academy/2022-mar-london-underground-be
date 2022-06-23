@@ -11,11 +11,7 @@ const getTubes = async () => {
 const getAllStations = async () => {
     console.log(`Repository: getAllStations`);
     return await tubes.aggregate([
-        { "$group": {
-                "_id": null,
-                "name": { "$addToSet": "$stations.name",  },
-                "code": { "$addToSet": "$stations.code" }
-            }}
+        {$group: {"_id": {name: "$stations.name", code : "$stations.code"}}}
     ]).toArray();
 }
 
