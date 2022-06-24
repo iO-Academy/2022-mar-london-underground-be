@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/iO-Academy/2022-mar-london-underground-be/issues"
   },
-  "homepage": "https://github.com/iO-Academy/2022-mar-london-underground-be#readme"
+  "homepage": "https://github.com/iO-Academy/2022-mar-london-underground-be#readme",
+  "devDependencies": {
+    "jest": "^28.1.1"
+  }
 }

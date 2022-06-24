@@ -1,7 +1,6 @@
 const tubeRepository = require('../repositories/tubeRepository');
 
 const getAllStations = async () => {
-    console.log(`Service: getAllStations`);
     return await tubeRepository.getAllStations()
         .then((stations) => {
             let stationArray = [];
@@ -25,7 +24,6 @@ const getAllStations = async () => {
     }
 
 const getJourneys = async (start, end) => {
-    console.log(`Service: getJourneys`);
 
     return await tubeRepository.getJourneys(start, end)
         .then((journeys) => {
@@ -34,46 +32,27 @@ const getJourneys = async (start, end) => {
             journeys.forEach(line => {
                 let filteredStations = [];
                 let journeyTime = 0;
-                let price = 399;
-                let diff = 0;
-
-                let startZone = line.stations.filter(x => x.name === start)
-                let endZone = line.stations.filter(y => y.name === end)
-
-                if (startZone[0].zone > endZone[0].zone) {
-                    diff = startZone[0].zone - endZone[0].zone;
-                    price += 70 * diff;
-                } else if (startZone[0].zone < endZone[0].zone) {
-                    diff = endZone[0].zone - startZone[0].zone;
-                    price += 35 * diff;
-                }
+                let time = '';
 
                 if (start > end) {
                     filteredStations = line.stations.filter(filtered => filtered.name <= start && filtered.name >= end);
+                    time = 'timeToPrev';
+
                     filteredStations.reverse();
-                    filteredStations[filteredStations.length - 1].timeToPrev = 0;
-                    journeyTime = filteredStations.reduce((sum, current) => sum + current.timeToPrev, 0);
-                    stops = filteredStations.reduce((stations, station) => {
-                        let stopData = {"stop": station.name, "timeToNext": station.timeToPrev}
-                        stations.push(stopData);
-                        return stations;
-                    }, []);
+                    journeyTime = calcTime(filteredStations, time);
                 } else {
                     filteredStations = line.stations.filter(filtered => filtered.name >= start && filtered.name <= end);
-                    filteredStations[filteredStations.length - 1].timeToNext = 0;
-                    journeyTime = filteredStations.reduce((sum, current) => sum + current.timeToNext, 0);
-                    stops = filteredStations.reduce((stations, station) => {
-                        let stopData = {"stop": station.name, "timeToNext": station.timeToNext}
-                        stations.push(stopData);
-                        return stations;
-                    }, []);
+                    time = 'timeToNext';
+
+                    journeyTime = calcTime(filteredStations, time)
+                    stops = showStop(filteredStations, time);
                 }
 
                 let numStops = filteredStations.length - 1;
                 let lineData = {"line": line.line,
                                  "stops": numStops,
                                  "time": journeyTime,
-                                 "price": price,
+                                 "price": calcTripPrice(start, end, line),
                                  "stations": stops};
                 lines.push(lineData);
             })
@@ -81,5 +60,34 @@ const getJourneys = async (start, end) => {
         })
 }
 
+function calcTime (filteredStations, time) {
+    return journeyTime = filteredStations.reduce((sum, current) => sum + current[time], 0);
+}
+
+function showStop (filteredStations, time) {
+    filteredStations[filteredStations.length - 1][time] = 0;
+    return filteredStations.reduce((stations, station) => {
+        let stopData = {"stop": station.name, "timeToNext": station[time]}
+        stations.push(stopData);
+        return stations;
+    }, []);
+}
+
+function calcTripPrice (start, end, line) {
+
+    let startZone = line.stations.filter(x => x.name === start);
+    let endZone = line.stations.filter(y => y.name === end);
+    const ticketPrice = 399;
+
+    if (startZone[0].zone > endZone[0].zone) {
+        return ticketPrice + 70 * (startZone[0].zone - endZone[0].zone);
+    } else if (startZone[0].zone < endZone[0].zone) {
+        return ticketPrice + 35 * (endZone[0].zone - startZone[0].zone);
+    } else {
+        return ticketPrice
+    }
+}
+
 module.exports.getAllStations = getAllStations;
 module.exports.getJourneys = getJourneys;
+module.exports.calcTripPrice = calcTripPrice;
